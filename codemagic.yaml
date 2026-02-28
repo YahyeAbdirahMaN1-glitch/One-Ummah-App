@@ -1,13 +1,14 @@
 workflows:
   android-build:
-    name: Android Build (JDK 17)
+    name: Android Build (Pinned Flutter)
     max_build_duration: 60
     environment:
-      flutter: stable
+      flutter: 3.16.9
       java: 17
     scripts:
       - name: Clean & get packages
         script: |
+          flutter --version
           flutter clean
           flutter pub get
       - name: Build APK

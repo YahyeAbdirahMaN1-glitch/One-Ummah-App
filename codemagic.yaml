@@ -5,14 +5,33 @@ workflows:
     environment:
       flutter: 3.16.9
       java: 17
+
     scripts:
       - name: Clean & get packages
         script: |
           flutter --version
           flutter clean
           flutter pub get
-      - name: Build APK
-        script: flutter build apk --release
+
+      - name: Build APK (release)
+        script: |
+          flutter build apk --release
+
+      - name: Show APK outputs (debug)
+        script: |
+          echo "Listing APK output folders..."
+          ls -la build/app/outputs || true
+          ls -la build/app/outputs/flutter-apk || true
+          find build/app/outputs -type f -name "*.apk" -maxdepth 5 || true
+
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
       - build/app/outputs/bundle/release/*.aab
+
+    publishing:
+      email:
+        recipients:
+          - your@email.com
+        notify:
+          success: true
+          failure: true

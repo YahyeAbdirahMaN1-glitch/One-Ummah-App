@@ -1,37 +1,47 @@
 workflows:
-  android-build:
-    name: Android Build (Pinned Flutter)
+  android_aab:
+    name: Android AAB (Release)
     max_build_duration: 60
     environment:
-      flutter: 3.16.9
-      java: 17
-
+      flutter: stable
     scripts:
-      - name: Clean & get packages
+      - name: Pub get
         script: |
           flutter --version
-          flutter clean
           flutter pub get
 
-      - name: Build APK (release)
+      - name: Build AAB
         script: |
-          flutter build apk --release
+          flutter clean
+          flutter build appbundle --release
 
-      - name: Show APK outputs (debug)
+      - name: Show outputs
         script: |
-          echo "Listing APK output folders..."
-          ls -la build/app/outputs || true
-          ls -la build/app/outputs/flutter-apk || true
-          find build/app/outputs -type f -name "*.apk" -maxdepth 5 || true
+          echo "AAB files:"
+          find build -maxdepth 8 -type f -name "*.aab" -print || true
+          echo "Outputs folder:"
+          ls -R build/app/outputs || true
 
     artifacts:
-      - build/app/outputs/flutter-apk/*.apk
       - build/app/outputs/bundle/release/*.aab
 
-    publishing:
-      email:
-        recipients:
-          - your@email.com
-        notify:
-          success: true
-          failure: true
+  ios_ipa:
+    name: iOS IPA (Release)
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Pub get
+        script: |
+          flutter --version
+          flutter pub get
+
+      - name: Build IPA
+        script: |
+          flutter clean
+          flutter build ipa --release
+
+    artifacts:
+      - build/ios/ipa/*.ipa

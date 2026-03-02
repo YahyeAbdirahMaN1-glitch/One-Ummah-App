@@ -1,5 +1,5 @@
 name: one_ummah_app
-description: One Ummah - Official Mobile App
+description: One Ummah Official App
 publish_to: "none"
 
 version: 1.0.0+1
@@ -10,14 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
   webview_flutter: ^4.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true

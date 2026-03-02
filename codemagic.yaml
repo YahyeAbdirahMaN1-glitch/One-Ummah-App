@@ -21,7 +21,6 @@ workflows:
           find build -maxdepth 8 -type f -name "*.aab" -print || true
           echo "Outputs folder:"
           ls -R build/app/outputs || true
-
     artifacts:
       - build/app/outputs/bundle/release/*.aab
 
@@ -42,6 +41,5 @@ workflows:
         script: |
           flutter clean
           flutter build ipa --release
-
     artifacts:
       - build/ios/ipa/*.ipa
